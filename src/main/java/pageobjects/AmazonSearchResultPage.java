@@ -4,15 +4,10 @@ import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.CustomWaits;
 
@@ -31,6 +26,9 @@ public class AmazonSearchResultPage {
     )
     private List<WebElement> resultItems;
 
+    @FindBy(css = ".s-pagination-container")
+    private WebElement paginationContainer;
+
     public AmazonSearchResultPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -46,5 +44,16 @@ public class AmazonSearchResultPage {
             LOGGER.info("An error occurred while tying to wait for the search results");
             return 0;
         }
+    }
+
+    public void scrollToPaginationContainer() {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+        javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);", paginationContainer);
+    }
+
+    public void navigateToSecondPage() {
+        paginationContainer.findElement(
+                By.xpath("//*[contains(@class, 's-pagination-item') and text()=2]")
+        ).click();
     }
 }

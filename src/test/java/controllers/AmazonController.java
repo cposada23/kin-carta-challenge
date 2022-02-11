@@ -40,4 +40,14 @@ public class AmazonController {
         );
     }
 
+    public void navigateToSecondPageOfSearchResults() {
+        amazonSearchResultPage.scrollToPaginationContainer();
+        amazonSearchResultPage.navigateToSecondPage();
+        int numberOfSearchResults = amazonSearchResultPage.waitForSearchResult();
+        Assertions.assertTrue(
+                numberOfSearchResults > 0,
+                "there where no results found for the given search parameter in the second page"
+        );
+    }
+
 }

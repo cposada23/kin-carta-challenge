@@ -62,14 +62,14 @@ public class AmazonSearchSteps {
     }
 
     @When("the user searches for {string}")
-    public void theUserSearchesFor(String search) throws InterruptedException {
+    public void theUserSearchesFor(String search) {
         amazonController.searchForAndVerifyResults(search);
-        Thread.sleep(5000);
     }
 
     @And("navigates to the second page")
-    public void navigatesToTheSecondPage() {
-        LOGGER.info("step 1");
+    public void navigatesToTheSecondPage() throws InterruptedException{
+        amazonController.navigateToSecondPageOfSearchResults();
+        Thread.sleep(5000);
     }
 
     @And("selects the third item")
