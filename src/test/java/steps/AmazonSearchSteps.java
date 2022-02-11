@@ -1,5 +1,6 @@
 package steps;
 
+import controllers.AmazonController;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -21,6 +22,7 @@ public class AmazonSearchSteps {
 
     private static final Logger LOGGER = LogManager.getLogger(AmazonSearchSteps.class);
     private WebDriver driver;
+    private AmazonController amazonController;
 
     @Before()
     public void setUp() {
@@ -42,6 +44,8 @@ public class AmazonSearchSteps {
         } catch (IOException ex) {
             Assertions.fail("could not load the configuration file"+ ex.getMessage());
         }
+
+        amazonController = new AmazonController(driver);
     }
 
     @After()
@@ -54,8 +58,9 @@ public class AmazonSearchSteps {
 
     @Given("the user navigates to {string}")
     public void theUserNavigatesTo(String url) {
-        LOGGER.info("step 1");
-        driver.get(url);
+        Assertions.assertTrue(
+            amazonController.openAmazonAndWaitToLoad(url)
+        );
     }
 
     @When("the user searches for {string}")
