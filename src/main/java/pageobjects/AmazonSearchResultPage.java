@@ -1,15 +1,16 @@
 package pageobjects;
 
-import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.CustomActions;
 import utils.CustomWaits;
+import utils.exceptions.NumberOfItemsException;
 
 import java.time.Duration;
 import java.util.List;
@@ -22,12 +23,15 @@ public class AmazonSearchResultPage {
     private WebDriverWait wait;
 
     @FindAll(
-        @FindBy(xpath = "//*[contains(@class, 's-result-item')]")
+        @FindBy(xpath = "//*[contains(@class, 's-result-item')]//*[contains(@class, 's-title-instructions-style')]//h2//a[contains(@class, 'a-link-normal')]")
     )
     private List<WebElement> resultItems;
 
     @FindBy(css = ".s-pagination-container")
     private WebElement paginationContainer;
+
+    @FindBy(xpath = "//*[contains(@class, 's-main-slot s-result-list s-search-results')]")
+    private WebElement searchResultContainer;
 
     public AmazonSearchResultPage(WebDriver driver) {
         this.driver = driver;
@@ -47,8 +51,7 @@ public class AmazonSearchResultPage {
     }
 
     public void scrollToPaginationContainer() {
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
-        javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);", paginationContainer);
+        CustomActions.scrollIntoView(driver, paginationContainer);
     }
 
     public void navigateToSecondPage() {
@@ -56,4 +59,14 @@ public class AmazonSearchResultPage {
                 By.xpath("//*[contains(@class, 's-pagination-item') and text()=2]")
         ).click();
     }
+
+    public void selectItemNumber(int itemNumber) throws NumberOfItemsException {
+        int numberOfItems = resultItems.size();
+        if (numberOfItems < itemNumber) throw new NumberOfItemsException("No item number " + itemNumber + " found in the page");
+        WebElement product = resultItems.get(itemNumber - 1);
+        CustomActions.scrollIntoView(driver, product);
+        wait.until(ExpectedConditions.elementToBeClickable(product));
+        product.click();
+    }
+
 }

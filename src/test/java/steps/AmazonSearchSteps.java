@@ -67,14 +67,14 @@ public class AmazonSearchSteps {
     }
 
     @And("navigates to the second page")
-    public void navigatesToTheSecondPage() throws InterruptedException{
+    public void navigatesToTheSecondPage() {
         amazonController.navigateToSecondPageOfSearchResults();
-        Thread.sleep(5000);
     }
 
     @And("selects the third item")
-    public void selectsTheThirdItem() {
-        LOGGER.info("step 1");
+    public void selectsTheThirdItem() throws InterruptedException {
+        amazonController.selectThirdItem();
+        Thread.sleep(5000);
     }
 
     @Then("the user is able to add the item to the cart")

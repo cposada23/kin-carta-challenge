@@ -50,4 +50,13 @@ public class AmazonController {
         );
     }
 
+    public void selectThirdItem() {
+        try {
+            amazonSearchResultPage.selectItemNumber(3);
+        } catch (Exception e) {
+            LOGGER.error("An error occurred selecting the third item in the result page. " + e.getMessage());
+            Assertions.fail(e.getMessage());
+        }
+    }
+
 }
