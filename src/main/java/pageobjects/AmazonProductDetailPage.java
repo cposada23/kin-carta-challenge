@@ -19,13 +19,13 @@ public class AmazonProductDetailPage {
     @FindBy(id = "productTitle")
     private WebElement productTitle;
 
-    @FindBy(id = "submit.add-to-cart")
+    @FindBy(xpath = "//*[contains(@id, 'add-to-cart-button')]/ancestor::*[contains(@id, 'submit.add-to-cart')]")
     private WebElement addToCartButton;
 
     @FindBy(id = "add-to-cart-confirmation-image")
     private WebElement confirmationImage;
 
-    @FindBy(xpath = "//*[contains(@id, 'corePrice')]//*[contains(@class, 'apexPriceToPay')]/span[@aria-hidden]")
+    @FindBy(xpath = "(//*[contains(@id, 'corePrice')]//*[contains(@class, 'apexPriceToPay')]/span[@aria-hidden] | //*[contains(@id, 'corePrice')]//*[contains(@class, 'priceToPay')]//*[@aria-hidden])")
     private WebElement priceTag;
 
     public AmazonProductDetailPage(WebDriver driver) {

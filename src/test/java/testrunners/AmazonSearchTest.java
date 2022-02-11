@@ -12,6 +12,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "json:target/reports/report.json")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "steps")
 public class AmazonSearchTest {
 }

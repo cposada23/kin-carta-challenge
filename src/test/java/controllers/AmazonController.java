@@ -68,7 +68,7 @@ public class AmazonController {
                     "Add to cart button is not visible on the page"
             );
             selectedProduct.setPrice(
-                    amazonProductDetailPage.getProductPrice()
+                    amazonProductDetailPage.getProductPrice().replace("\n", ".")
             );
             LOGGER.info("Product selected: " + selectedProduct);
             return selectedProduct;
