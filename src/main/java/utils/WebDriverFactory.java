@@ -24,7 +24,9 @@ public class WebDriverFactory {
                 WebDriverManager.firefoxdriver().driverVersion("0.30.0").setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setHeadless(headless);
-                return new FirefoxDriver();
+                WebDriver firefoxDriver = new FirefoxDriver();
+                firefoxDriver.manage().window().maximize();
+                return firefoxDriver;
             case "chrome":
             default:
                 WebDriverManager.chromedriver().setup();
@@ -32,7 +34,9 @@ public class WebDriverFactory {
                 if (headless) {
                     chromeOptions.addArguments("headless");
                 }
-                return new ChromeDriver(chromeOptions);
+                WebDriver chromeDriver = new ChromeDriver(chromeOptions);
+                chromeDriver.manage().window().maximize();
+                return chromeDriver;
         }
     }
 }

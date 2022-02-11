@@ -19,6 +19,8 @@ public class AmazonHomePage {
     private WebDriver driver;
     private WebDriverWait wait;
 
+    // I use xpath instead of the input id, because the input id seems to be different for different screen sizes
+    // So I just look for the input that is visible in the search bar
     @FindBy(xpath = "//*[contains(@class, 'nav-search-field')]/input")
     private WebElement searchInput;
 
