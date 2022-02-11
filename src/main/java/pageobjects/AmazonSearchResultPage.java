@@ -23,6 +23,9 @@ public class AmazonSearchResultPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
+    @FindBy(xpath = "//*[contains(@id, 'corePrice')]//*[contains(@class, 'apexPriceToPay')]/span[@class='a-offscreen']")
+    private WebElement priceTag;
+
     @FindBy(xpath = "//*[@id='s-refinements']")
     private WebElement filtersContainer;
 
@@ -83,6 +86,10 @@ public class AmazonSearchResultPage {
         Product product = new Product(productElement.getText());
         productElement.click();
         return product;
+    }
+
+    public String getProductPrice () {
+        return priceTag.getText();
     }
 
 }
