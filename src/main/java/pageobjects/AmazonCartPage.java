@@ -1,6 +1,7 @@
 package pageobjects;
 
 import org.omg.CORBA.TIMEOUT;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -41,6 +42,13 @@ public class AmazonCartPage {
         } catch (Exception e) {
             return 0;
         }
+    }
+
+    public String getPriceOfItemInCart(int itemNumber) {
+        return cartItems.get(itemNumber - 1)
+                .findElement(By.xpath(
+                        "//*[@class='sc-list-item-content']//span[contains(@class,'sc-product-price')]"
+                )).getText();
     }
 
 }

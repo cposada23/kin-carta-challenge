@@ -25,6 +25,9 @@ public class AmazonProductDetailPage {
     @FindBy(id = "add-to-cart-confirmation-image")
     private WebElement confirmationImage;
 
+    @FindBy(xpath = "//*[contains(@id, 'corePrice')]//*[contains(@class, 'apexPriceToPay')]/span[@aria-hidden]")
+    private WebElement priceTag;
+
     public AmazonProductDetailPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -56,5 +59,9 @@ public class AmazonProductDetailPage {
         }catch (Exception e) {
             return false;
         }
+    }
+
+    public String getProductPrice () {
+        return priceTag.getText();
     }
 }

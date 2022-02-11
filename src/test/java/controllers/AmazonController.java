@@ -68,7 +68,7 @@ public class AmazonController {
                     "Add to cart button is not visible on the page"
             );
             selectedProduct.setPrice(
-                    amazonSearchResultPage.getProductPrice()
+                    amazonProductDetailPage.getProductPrice()
             );
             LOGGER.info("Product selected: " + selectedProduct);
             return selectedProduct;
@@ -100,6 +100,9 @@ public class AmazonController {
                 amazonCartPage.numberOfItemsInTheCart(),
                 1
         );
+
+        String priceOfItemInCart = amazonCartPage.getPriceOfItemInCart(1);
+        Assertions.assertEquals(priceOfItemInCart, selectedProduct.getPrice());
     }
 
 }
