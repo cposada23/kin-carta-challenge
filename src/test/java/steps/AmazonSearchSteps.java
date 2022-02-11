@@ -72,13 +72,13 @@ public class AmazonSearchSteps {
     }
 
     @And("selects the third item")
-    public void selectsTheThirdItem() throws InterruptedException {
+    public void selectsTheThirdItem() {
         amazonController.selectThirdItem();
-        Thread.sleep(5000);
     }
 
     @Then("the user is able to add the item to the cart")
-    public void theUserIsAbleToAddTheItemToTheCart() {
+    public void theUserIsAbleToAddTheItemToTheCart() throws InterruptedException  {
         LOGGER.info("step 1");
+        Thread.sleep(5000);
     }
 }

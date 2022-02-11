@@ -9,4 +9,9 @@ public class CustomActions {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
         javascriptExecutor.executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
+    public static void jsClick(WebDriver driver, WebElement element) {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+        javascriptExecutor.executeScript("arguments[0].click()", element);
+    }
 }

@@ -32,6 +32,8 @@ public class AmazonController {
     public void searchForAndVerifyResults(String search) {
         LOGGER.info("Searching for: " + search);
         amazonHomePage.searchFor(search);
+        amazonSearchResultPage.waitForSearchResult();
+        amazonSearchResultPage.selectFreeShipping();
         int numberOfSearchResults = amazonSearchResultPage.waitForSearchResult();
         LOGGER.info("Number of results found in the first page: " + numberOfSearchResults);
         Assertions.assertTrue(
