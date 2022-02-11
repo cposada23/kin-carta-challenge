@@ -3,7 +3,7 @@ Feature: Amazon search
   available for purchase and can be added to the cart.
 
   Scenario: Search for Alexa
-    Given the user navigates to "www.amazon.com"
+    Given the user navigates to "https://www.amazon.com"
     When the user searches for "Alexa"
     And navigates to the second page
     And selects the third item

@@ -1,13 +1,17 @@
 package steps;
 
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,6 +21,7 @@ import java.util.Properties;
 public class AmazonSearchSteps {
 
     private static final Logger LOGGER = LogManager.getLogger(AmazonSearchSteps.class);
+    private WebDriver driver;
 
     @Before()
     public void setUp() {
@@ -29,14 +34,26 @@ public class AmazonSearchSteps {
             properties.load(input);
             LOGGER.info("Executing test in Browser: " + properties.getProperty("browser"));
             LOGGER.info("Headless Mode: " + properties.get("headless"));
+
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
         } catch (IOException ex) {
             Assertions.fail("could not load the configuration file"+ ex.getMessage());
+        }
+    }
+
+    @After()
+    public void tearDown() {
+        if(driver != null) {
+            driver.close();
+            driver.quit();
         }
     }
 
     @Given("the user navigates to {string}")
     public void theUserNavigatesTo(String url) {
         LOGGER.info("step 1");
+        driver.get(url);
     }
 
     @When("the user searches for {string}")
