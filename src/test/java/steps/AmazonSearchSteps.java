@@ -6,12 +6,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import utils.WebDriverFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,11 +31,14 @@ public class AmazonSearchSteps {
         ) {
             Properties properties = new Properties();
             properties.load(input);
-            LOGGER.info("Executing test in Browser: " + properties.getProperty("browser"));
-            LOGGER.info("Headless Mode: " + properties.get("headless"));
 
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            String browser = properties.getProperty("browser");
+            boolean headless = "true".equals(properties.getProperty("headless"));
+
+            LOGGER.info("Executing test in Browser: " + browser);
+            LOGGER.info("Headless Mode: " + headless);
+
+            driver = WebDriverFactory.getWebDriver(browser, headless);
         } catch (IOException ex) {
             Assertions.fail("could not load the configuration file"+ ex.getMessage());
         }
