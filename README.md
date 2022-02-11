@@ -1,3 +1,13 @@
+# KIN + CARTA | AUTOMATION CHALLEGE
+#### _challenge to test web automation skills_
+
+Here are the instuctions to run the tests
+
+## Installation
+
+Required dependencies
+- Java8
+- Maven 3.8.4 or Just use maven wrapper from IntelliJ
 
 ## Running the tests:
 #### From the test Runner
