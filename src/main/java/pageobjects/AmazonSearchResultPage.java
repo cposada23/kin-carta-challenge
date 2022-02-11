@@ -1,5 +1,6 @@
 package pageobjects;
 
+import dto.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
@@ -73,13 +74,15 @@ public class AmazonSearchResultPage {
         ).click();
     }
 
-    public void selectItemNumber(int itemNumber) throws NumberOfItemsException {
+    public Product selectItemNumber(int itemNumber) throws NumberOfItemsException {
         int numberOfItems = resultItems.size();
         if (numberOfItems < itemNumber) throw new NumberOfItemsException("No item number " + itemNumber + " found in the page");
-        WebElement product = resultItems.get(itemNumber - 1);
-        CustomActions.scrollIntoView(driver, product);
-        wait.until(ExpectedConditions.elementToBeClickable(product));
-        product.click();
+        WebElement productElement = resultItems.get(itemNumber - 1);
+        CustomActions.scrollIntoView(driver, productElement);
+        wait.until(ExpectedConditions.elementToBeClickable(productElement));
+        Product product = new Product(productElement.getText());
+        productElement.click();
+        return product;
     }
 
 }

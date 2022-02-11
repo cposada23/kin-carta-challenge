@@ -1,10 +1,12 @@
 package controllers;
 
+import dto.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import pageobjects.AmazonHomePage;
+import pageobjects.AmazonProductDetailPage;
 import pageobjects.AmazonSearchResultPage;
 
 public class AmazonController {
@@ -12,11 +14,13 @@ public class AmazonController {
     private WebDriver driver;
     private AmazonHomePage amazonHomePage;
     private AmazonSearchResultPage amazonSearchResultPage;
+    private AmazonProductDetailPage amazonProductDetailPage;
 
     public AmazonController(WebDriver driver) {
         this.driver = driver;
         amazonHomePage = new AmazonHomePage(driver);
         amazonSearchResultPage = new AmazonSearchResultPage(driver);
+        amazonProductDetailPage = new AmazonProductDetailPage(driver);
     }
 
     public void openAmazonAndWaitToLoad(String url) {
@@ -52,13 +56,24 @@ public class AmazonController {
         );
     }
 
-    public void selectThirdItem() {
+    public Product selectThirdItem() {
         try {
-            amazonSearchResultPage.selectItemNumber(3);
+            Product selectedProduct = amazonSearchResultPage.selectItemNumber(3);
+            LOGGER.info("Product selected: " + selectedProduct.getProductTitle());
+            return selectedProduct;
         } catch (Exception e) {
             LOGGER.error("An error occurred selecting the third item in the result page. " + e.getMessage());
             Assertions.fail(e.getMessage());
+            return null;
         }
+    }
+
+    public void addProductToCart(Product selectedProduct) {
+        String titleInDetailsPage = amazonProductDetailPage.getProductTitle();
+        Assertions.assertEquals(
+                titleInDetailsPage, selectedProduct.getProductTitle(),
+                "The product title in the details page is not the expected title"
+        );
     }
 
 }

@@ -1,6 +1,7 @@
 package steps;
 
 import controllers.AmazonController;
+import dto.Product;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -23,6 +24,7 @@ public class AmazonSearchSteps {
     private static final Logger LOGGER = LogManager.getLogger(AmazonSearchSteps.class);
     private WebDriver driver;
     private AmazonController amazonController;
+    private Product selectedProduct;
 
     @Before()
     public void setUp() {
@@ -73,12 +75,12 @@ public class AmazonSearchSteps {
 
     @And("selects the third item")
     public void selectsTheThirdItem() {
-        amazonController.selectThirdItem();
+        selectedProduct = amazonController.selectThirdItem();
     }
 
     @Then("the user is able to add the item to the cart")
     public void theUserIsAbleToAddTheItemToTheCart() throws InterruptedException  {
-        LOGGER.info("step 1");
+        amazonController.addProductToCart(selectedProduct);
         Thread.sleep(5000);
     }
 }
