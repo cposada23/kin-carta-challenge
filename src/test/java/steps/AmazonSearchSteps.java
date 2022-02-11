@@ -58,14 +58,13 @@ public class AmazonSearchSteps {
 
     @Given("the user navigates to {string}")
     public void theUserNavigatesTo(String url) {
-        Assertions.assertTrue(
-            amazonController.openAmazonAndWaitToLoad(url)
-        );
+        amazonController.openAmazonAndWaitToLoad(url);
     }
 
     @When("the user searches for {string}")
-    public void theUserSearchesFor(String search) {
-        LOGGER.info("step 1");
+    public void theUserSearchesFor(String search) throws InterruptedException {
+        amazonController.searchForAndVerifyResults(search);
+        Thread.sleep(5000);
     }
 
     @And("navigates to the second page")
