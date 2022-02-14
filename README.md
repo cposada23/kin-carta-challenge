@@ -18,7 +18,7 @@ Required dependencies
 ```
 #### From command line
 ```
-# In the proyect folder, open a coomand line and run:
+# In the proyect folder, open a command line and run:
 mvn clean test
 ```
 #### You can run the test in Chrome and firefox, changing the browser in the properties file
